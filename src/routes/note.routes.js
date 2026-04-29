@@ -14,4 +14,7 @@ router.get('/', noteController.getAllNotes);
 // GET /api/notes/:id - Get note by ID
 router.get('/:id', noteController.getNoteById);
 
+// PUT /api/notes/:id - Full replace
+router.put('/:id', noteController.replaceNote);
+
 module.exports = router;
