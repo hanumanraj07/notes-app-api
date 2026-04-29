@@ -23,4 +23,10 @@ router.patch('/:id', noteController.updateNote);
 // DELETE /api/notes/:id - Delete single
 router.delete('/:id', noteController.deleteNote);
 
+// DELETE /api/notes/bulk - Delete multiple notes
+router.delete('/bulk', noteController.deleteBulkNotes);
+
+// Search routes
+router.get('/search', noteController.searchByTitle);
+
 module.exports = router;
