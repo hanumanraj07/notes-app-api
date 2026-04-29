@@ -38,5 +38,14 @@ router.get('/sort-paginate', noteController.sortAndPaginate);
 router.get('/search-filter', noteController.searchAndFilter);
 router.get('/search-sort-paginate', noteController.searchSortPaginate);
 router.get('/filter-sort-paginate', noteController.filterSortPaginate);
+router.get('/query', noteController.masterQuery);
+
+// CRUD single-item routes LAST
+router.post(  '/',         noteController.createNote);
+router.get(   '/',         noteController.getAllNotes);
+router.get(   '/:id',      noteController.getNoteById);
+router.put(   '/:id',      noteController.replaceNote);
+router.patch( '/:id',      noteController.updateNote);
+router.delete('/:id',      noteController.deleteNote);
 
 module.exports = router;
