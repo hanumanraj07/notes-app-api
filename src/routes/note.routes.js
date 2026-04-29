@@ -20,4 +20,7 @@ router.put('/:id', noteController.replaceNote);
 // PATCH /api/notes/:id - Partial update
 router.patch('/:id', noteController.updateNote);
 
+// DELETE /api/notes/:id - Delete single
+router.delete('/:id', noteController.deleteNote);
+
 module.exports = router;
