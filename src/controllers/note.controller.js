@@ -1,6 +1,7 @@
 const Note = require('../models/note.model');
 
-const createNote = async (req, res) => {
+// POST /api/notes - Create single note
+exports.createNote = async (req, res) => {
   try {
     const { title, content, category, isPinned } = req.body;
 
@@ -9,32 +10,28 @@ const createNote = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: 'Title and content are required',
-        data: null,
+        data: null
       });
     }
 
-    // Create new note
+    // Create note
     const note = await Note.create({
       title,
       content,
       category: category || 'personal',
-      isPinned: isPinned || false,
+      isPinned: isPinned !== undefined ? isPinned : false
     });
 
     res.status(201).json({
       success: true,
       message: 'Note created successfully',
-      data: note,
+      data: note
     });
   } catch (error) {
     res.status(500).json({
       success: false,
       message: error.message,
-      data: null,
+      data: null
     });
   }
-};
-
-module.exports = {
-  createNote,
 };
