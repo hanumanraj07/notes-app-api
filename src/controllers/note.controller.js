@@ -445,3 +445,44 @@ exports.filterAndSort = async (req, res) => {
     });
   }
 };
+
+// GET /api/notes/filter-paginate - Filter by category and/or isPinned — and paginate the filtered results
+exports.filterAndPaginate = async (req, res) => {
+  try {
+    const { category, isPinned, page, limit } = req.query;
+
+    // Build filter
+    const filter = {};
+    if (category) filter.category = category;
+    if (isPinned !== undefined) filter.isPinned = isPinned === 'true';
+
+    // Pagination
+    const pageNum = parseInt(page) || 1;
+    const limitNum = parseInt(limit) || 10;
+    const skip = (pageNum - 1) * limitNum;
+
+    // Execute query
+    const total = await Note.countDocuments(filter);
+    const notes = await Note.find(filter).skip(skip).limit(limitNum);
+
+    res.status(200).json({
+      success: true,
+      message: 'Notes fetched successfully',
+      data: notes,
+      pagination: {
+        total,
+        page: pageNum,
+        limit: limitNum,
+        totalPages: Math.ceil(total / limitNum),
+        hasNextPage: pageNum < Math.ceil(total / limitNum),
+        hasPrevPage: pageNum > 1
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null
+    });
+  }
+};
