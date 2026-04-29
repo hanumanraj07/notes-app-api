@@ -34,5 +34,6 @@ router.get('/search', noteController.searchByTitle);
 // Combination routes
 router.get('/filter-sort', noteController.filterAndSort);
 router.get('/filter-paginate', noteController.filterAndPaginate);
+router.get('/sort-paginate', noteController.sortAndPaginate);
 
 module.exports = router;
