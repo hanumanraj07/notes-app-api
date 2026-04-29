@@ -31,4 +31,7 @@ router.get('/search/content', noteController.searchByContent);
 router.get('/search/all', noteController.searchAll);
 router.get('/search', noteController.searchByTitle);
 
+// Combination routes
+router.get('/filter-sort', noteController.filterAndSort);
+
 module.exports = router;
