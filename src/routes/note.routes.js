@@ -17,4 +17,7 @@ router.get('/:id', noteController.getNoteById);
 // PUT /api/notes/:id - Full replace
 router.put('/:id', noteController.replaceNote);
 
+// PATCH /api/notes/:id - Partial update
+router.patch('/:id', noteController.updateNote);
+
 module.exports = router;
