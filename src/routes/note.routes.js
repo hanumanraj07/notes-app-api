@@ -27,6 +27,8 @@ router.delete('/:id', noteController.deleteNote);
 router.delete('/bulk', noteController.deleteBulkNotes);
 
 // Search routes
+router.get('/search/content', noteController.searchByContent);
+router.get('/search/all', noteController.searchAll);
 router.get('/search', noteController.searchByTitle);
 
 module.exports = router;
