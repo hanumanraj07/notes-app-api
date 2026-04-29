@@ -527,3 +527,47 @@ exports.sortAndPaginate = async (req, res) => {
     });
   }
 };
+
+// GET /api/notes/search-filter - Search by keyword — and filter by category and/or isPinned at the same time.
+exports.searchAndFilter = async (req, res) => {
+  try {
+    const { q, category, isPinned } = req.query;
+
+    // Validate search query
+    if (!q) {
+      return res.status(400).json({
+        success: false,
+        message: 'Search query \'q\' is required',
+        data: null
+      });
+    }
+
+    // Build filter
+    const filter = {};
+
+    if (q) {
+      filter.$or = [
+        { title:   { $regex: q, $options: 'i' } },
+        { content: { $regex: q, $options: 'i' } }
+      ];
+    }
+    if (category) filter.category = category;
+    if (isPinned !== undefined) filter.isPinned = isPinned === 'true';
+
+    // Execute query
+    const notes = await Note.find(filter);
+
+    res.status(200).json({
+      success: true,
+      message: `Search results for: ${q}`,
+      count: notes.length,
+      data: notes
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null
+    });
+  }
+};
